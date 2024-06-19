@@ -1,0 +1,66 @@
+---
+{% set manufacturer_list = ["Amazon", "DigitalOcean", "HPE"] -%}
+manufacturers:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:name": "{{ manufacturer }}"
+{% endfor %}
+
+secrets:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:name": "{{ manufacturer }}_User"
+    provider: "environment-variable"
+    parameters: {'variable': '{{ manufacturer | upper }}_USER'}
+    "!ref": "{{ manufacturer | lower }}_secret_user"
+  - "!create_or_update:name": "{{ manufacturer }}_Secret"
+    provider: "environment-variable"
+    parameters: {'variable': '{{ manufacturer | upper }}_SECRET'}
+    "!ref": "{{ manufacturer | lower }}_secret_secret"
+{% endfor %}
+
+secrets_groups:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:name": "{{ manufacturer }}_Group"
+    "!ref": "{{ manufacturer | lower }}_group"
+{% endfor %}
+
+secrets_group_associations:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:secrets_group": "!ref:{{ manufacturer | lower }}_group"
+    "!create_or_update:secret": "!ref:{{ manufacturer | lower }}_secret_user"
+    "!create_or_update:access_type": "HTTP(S)"
+    "!create_or_update:secret_type": "username"
+  - "!create_or_update:secrets_group": "!ref:{{ manufacturer | lower }}_group"
+    "!create_or_update:secret": "!ref:{{ manufacturer | lower }}_secret_secret"
+    "!create_or_update:access_type": "HTTP(S)"
+    "!create_or_update:secret_type": "secret"
+{% endfor %}
+
+contacts:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:name": "{{ manufacturer }} Support"
+    email: "support@{{ manufacturer | lower }}.com"
+{% endfor %}
+
+cloud_accounts:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:name": "{{ manufacturer }} Admin"
+    account_number: "{{ manufacturer | lower }}-99999"
+    provider__name: "{{ manufacturer }}"
+    secrets_group__name: "{{ manufacturer }}_Group"
+{% endfor %}
+
+cloud_types:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:name": "{{ manufacturer }} VPC"
+    provider__name: "{{ manufacturer }}"
+    content_types:
+      - "!get:app_label": "cloud"
+        "!get:model": "cloudnetwork"
+{% endfor %}
+
+cloud_networks:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:name": "{{ manufacturer }}-VPC-01"
+    cloud_type__name: "{{ manufacturer }} VPC"
+    cloud_account__name: "{{ manufacturer }} Admin"
+{% endfor %}
