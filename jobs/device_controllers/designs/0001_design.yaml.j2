@@ -1,0 +1,119 @@
+---
+location_types:
+  - "!create_or_update:name": "External"
+    content_types:
+      - "!get:app_label": "dcim"
+        "!get:model": "controller"
+  - "!create_or_update:name": "Region"
+    nestable: true
+    children:
+      - "!create_or_update:name": "Site"
+        content_types:
+          - "!get:app_label": "circuits"
+            "!get:model": "circuittermination"
+          - "!get:app_label": "dcim"
+            "!get:model": "device"
+          - "!get:app_label": "dcim"
+            "!get:model": "powerpanel"
+          - "!get:app_label": "dcim"
+            "!get:model": "rack"
+          - "!get:app_label": "dcim"
+            "!get:model": "rackgroup"
+          - "!get:app_label": "ipam"
+            "!get:model": "prefix"
+          - "!get:app_label": "ipam"
+            "!get:model": "vlan"
+          - "!get:app_label": "ipam"
+            "!get:model": "vlangroup"
+          - "!get:app_label": "virtualization"
+            "!get:model": "cluster"
+
+locations:
+  - "!create_or_update:name": "Cisco"
+    status__name: "Active"
+    location_type__name: "External"
+  - "!create_or_update:name": "Americas"
+    status__name: "Active"
+    location_type__name: "Region"
+    children:
+    - "!create_or_update:name": "United States"
+      location_type__name: "Region"
+      status__name: "Active"
+      children:
+        - "!create_or_update:name": "ATL01"
+          location_type__name: "Site"
+          status__name: "Active"
+          "!ref": "atl01"
+        - "!create_or_update:name": "DFW01"
+          location_type__name: "Site"
+          status__name: "Active"
+          "!ref": "dfw01"
+
+roles:
+  - "!create_or_update:name": "edge"
+    color: "ff9800"
+    content_types:
+      - "!get:app_label": "dcim"
+        "!get:model": "device"
+
+manufacturers:
+  - "!create_or_update:name": "Cisco"
+
+device_families:
+  - "!create_or_update:name": "SD-WAN"
+    "!ref": "sdwan"
+
+device_types:
+  - "!create_or_update:model": "ISR 1111-8P"
+    part_number: C1111-8P
+    manufacturer__name: "Cisco"
+    device_family: "!ref:sdwan"
+    u_height: 1
+    is_full_depth: False
+    "!ref": "c1111-8p"
+
+interface_templates:
+  - "!create_or_update:name": "GigabitEthernet0/0/0"
+    "!create_or_update:device_type": "!ref:c1111-8p"
+    type: "1000base-x-sfp"
+  - "!create_or_update:name": "GigabitEthernet0/0/1"
+    "!create_or_update:device_type": "!ref:c1111-8p"
+    type: "1000base-t"
+  {% for i in range(8) %}
+  - "!create_or_update:name": "GigabitEthernet0/1/{{ i }}"
+    "!create_or_update:device_type": "!ref:c1111-8p"
+    type: "1000base-t"
+  {% endfor %}
+
+external_integrations:
+  - "!create_or_update:name": "Cisco Catalyst SD-WAN"
+    remote_url: "https://vmanage.cisco.com"
+    "!ref": "cisco_catalyst_sdwan"
+
+controllers:
+  - "!create_or_update:name": "Cisco Catalyst SD-WAN"
+    status__name: "Active"
+    description: "External Controller Cisco Catalyst SD-WAN (formally vManage)"
+    external_integration: "!ref:cisco_catalyst_sdwan"
+    location__name: "Cisco"
+    "!ref": "sdwan_controller"
+
+controller_managed_device_groups:
+  - "!create_or_update:name": "Cisco Catalyst SD-WAN Devices"
+    controller: "!ref:sdwan_controller"
+    "!ref": "sdwan_controller_device_group"
+
+{% macro device(device_name, site) -%}
+    - "!create_or_update:name": "{{ device_name }}"
+      location: "!ref:{{ site }}"
+      device_type: "!ref:c1111-8p"
+      role__name: "edge"
+      status__name: "Active"
+      controller_managed_device_group: "!ref:sdwan_controller_device_group"
+{% endmacro %}
+
+devices:
+    {{ device("atl01-sdwan-01", "atl01") }}
+    {{ device("atl01-sdwan-02", "atl01") }}
+    {{ device("dfw01-sdwan-01", "dfw01") }}
+    {{ device("dfw01-sdwan-02", "dfw01") }}
