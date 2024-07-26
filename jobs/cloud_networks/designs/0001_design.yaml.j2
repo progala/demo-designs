@@ -116,22 +116,22 @@ namespaces:
 
 prefixes:
   - "!create_or_update:prefix": "10.0.0.0/8"
+    "!create_or_update:namespace__name": "Cloud"
     type: "container"
-    namespace__name: "Cloud"
     status__name:  "Active"
   - "!create_or_update:prefix": "10.0.1.0/24"
+    "!create_or_update:namespace__name": "Cloud"
     type: network
-    namespace__name: "Cloud"
     status__name: "Active"
     "!ref": "Amazon_prefix"
   - "!create_or_update:prefix": "10.0.2.0/24"
+    "!create_or_update:namespace__name": "Cloud"
     type: network
-    namespace__name: "Cloud"
     status__name: "Active"
     "!ref": "HPE_prefix"
   - "!create_or_update:prefix": "10.0.3.0/24"
+    "!create_or_update:namespace__name": "Cloud"
     type: network
-    namespace__name: "Cloud"
     status__name: "Active"
     "!ref": "DigitalOcean_prefix"
 
@@ -173,22 +173,22 @@ circuit_types:
 
 circuits:
 {% for manufacturer in manufacturer_list %}
-  - cid: "{{manufacturer}}-ATL01"
+  - "!create_or_update:cid": "{{manufacturer}}-ATL01"
     status__name: "Active"
     provider__name: "AT&T"
     circuit_type__name: "Direct Connect"
     circuit_terminations:
-      - term_side: "A"
-        location__name: "ATL01"
-      - term_side: "Z"
-        cloud_network__name: "{{ manufacturer }}-VPC-01"
-  - cid: "{{manufacturer}}-DFW01"
+      - "!create_or_update:term_side": "A"
+        "!create_or_update:location__name": "ATL01"
+      - "!create_or_update:term_side": "Z"
+        "!create_or_update:cloud_network__name": "{{ manufacturer }}-VPC-01"
+  - "!create_or_update:cid": "{{manufacturer}}-DFW01"
     status__name: "Active"
     provider__name: "AT&T"
     circuit_type__name: "Direct Connect"
     circuit_terminations:
-      - term_side: "A"
-        location__name: "DFW01"
-      - term_side: "Z"
-        cloud_network__name: "{{ manufacturer }}-VPC-01"
+      - "!create_or_update:term_side": "A"
+        "!create_or_update:location__name": "DFW01"
+      - "!create_or_update:term_side": "Z"
+        "!create_or_update:cloud_network__name": "{{ manufacturer }}-VPC-01"
 {% endfor %}
