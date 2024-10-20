@@ -4,6 +4,7 @@ from .device_controllers import ControllerDesign
 from .device_modules import ModuleDesign
 from .cloud_networks import CloudNetworkDesign
 from .core_site import CoreSiteDesign
+from .device_controllers import ControllerDesign
 from .edge_site import EdgeDesign
 from .initial_data import InitialDesign
 
