@@ -1,0 +1,194 @@
+---
+location_types:
+  - "!create_or_update:name": "Region"
+    nestable: true
+    children:
+      - "!create_or_update:name": "Site"
+        content_types:
+          - "!get:app_label": "circuits"
+            "!get:model": "circuittermination"
+          - "!get:app_label": "dcim"
+            "!get:model": "device"
+          - "!get:app_label": "dcim"
+            "!get:model": "powerpanel"
+          - "!get:app_label": "dcim"
+            "!get:model": "rack"
+          - "!get:app_label": "dcim"
+            "!get:model": "rackgroup"
+          - "!get:app_label": "ipam"
+            "!get:model": "prefix"
+          - "!get:app_label": "ipam"
+            "!get:model": "vlan"
+          - "!get:app_label": "ipam"
+            "!get:model": "vlangroup"
+          - "!get:app_label": "virtualization"
+            "!get:model": "cluster"
+
+locations:
+  - "!create_or_update:name": "Americas"
+    status__name: "Active"
+    location_type__name: "Region"
+    children:
+    - "!create_or_update:name": "United States"
+      location_type__name: "Region"
+      status__name: "Active"
+      children:
+        - "!create_or_update:name": "ATL01"
+          location_type__name: "Site"
+          status__name: "Active"
+          "!ref": "atl01"
+        - "!create_or_update:name": "DFW01"
+          location_type__name: "Site"
+          status__name: "Active"
+          "!ref": "dfw01"
+
+{% set manufacturer_list = ["Amazon", "DigitalOcean", "HPE"] -%}
+manufacturers:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:name": "{{ manufacturer }}"
+{% endfor %}
+
+secrets:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:name": "{{ manufacturer }}_User"
+    provider: "environment-variable"
+    parameters: {'variable': '{{ manufacturer | upper }}_USER'}
+    "!ref": "{{ manufacturer | lower }}_secret_user"
+  - "!create_or_update:name": "{{ manufacturer }}_Secret"
+    provider: "environment-variable"
+    parameters: {'variable': '{{ manufacturer | upper }}_SECRET'}
+    "!ref": "{{ manufacturer | lower }}_secret_secret"
+{% endfor %}
+
+secrets_groups:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:name": "{{ manufacturer }}_Group"
+    "!ref": "{{ manufacturer | lower }}_group"
+{% endfor %}
+
+secrets_group_associations:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:secrets_group": "!ref:{{ manufacturer | lower }}_group"
+    "!create_or_update:secret": "!ref:{{ manufacturer | lower }}_secret_user"
+    "!create_or_update:access_type": "HTTP(S)"
+    "!create_or_update:secret_type": "username"
+  - "!create_or_update:secrets_group": "!ref:{{ manufacturer | lower }}_group"
+    "!create_or_update:secret": "!ref:{{ manufacturer | lower }}_secret_secret"
+    "!create_or_update:access_type": "HTTP(S)"
+    "!create_or_update:secret_type": "secret"
+{% endfor %}
+
+contacts:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:name": "{{ manufacturer }} Support"
+    email: "support@{{ manufacturer | lower }}.com"
+{% endfor %}
+
+cloud_accounts:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:name": "{{ manufacturer }} Admin"
+    account_number: "{{ manufacturer | lower }}-99999"
+    provider__name: "{{ manufacturer }}"
+    secrets_group__name: "{{ manufacturer }}_Group"
+{% endfor %}
+
+cloud_resource_types:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:name": "{{ manufacturer }} VPC"
+    provider__name: "{{ manufacturer }}"
+    content_types:
+      - "!get:app_label": "cloud"
+        "!get:model": "cloudnetwork"
+  - "!create_or_update:name": "S3"
+    provider__name: "Amazon"
+    content_types:
+      - "!get:app_label": "cloud"
+        "!get:model": "cloudservice"
+  - "!create_or_update:name": "Spaces Object Storage"
+    provider__name: "DigitalOcean"
+    content_types:
+      - "!get:app_label": "cloud"
+        "!get:model": "cloudservice"
+{% endfor %}
+
+namespaces:
+  - "!create_or_update:name": "Cloud"
+
+prefixes:
+  - "!create_or_update:prefix": "10.0.0.0/8"
+    "!create_or_update:namespace__name": "Cloud"
+    type: "container"
+    status__name:  "Active"
+  - "!create_or_update:prefix": "10.0.1.0/24"
+    "!create_or_update:namespace__name": "Cloud"
+    type: network
+    status__name: "Active"
+    "!ref": "Amazon_prefix"
+  - "!create_or_update:prefix": "10.0.2.0/24"
+    "!create_or_update:namespace__name": "Cloud"
+    type: network
+    status__name: "Active"
+    "!ref": "HPE_prefix"
+  - "!create_or_update:prefix": "10.0.3.0/24"
+    "!create_or_update:namespace__name": "Cloud"
+    type: network
+    status__name: "Active"
+    "!ref": "DigitalOcean_prefix"
+
+cloud_networks:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:name": "{{ manufacturer }}-VPC-01"
+    cloud_resource_type__name: "{{ manufacturer }} VPC"
+    cloud_account__name: "{{ manufacturer }} Admin"
+    "!ref": "{{ manufacturer }}_cloud_network"
+{% endfor %}
+
+cloud_network_prefix_assignments:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:cloud_network": "!ref:{{ manufacturer }}_cloud_network"
+    prefix: "!ref:{{ manufacturer }}_prefix"
+{% endfor %}
+
+cloud_services:
+  - "!create_or_update:name": "S3-US-EAST-01"
+    cloud_resource_type__name: "S3"
+    cloud_account__name: "Amazon Admin"
+    "!ref": "Amazon_S3"
+  - "!create_or_update:name": "DO-SPACE-01"
+    cloud_resource_type__name: "Spaces Object Storage"
+    cloud_account__name: "DigitalOcean Admin"
+    "!ref": "DigitalOceanSpace"
+
+cloud_service_network_assignments:
+  - "!create_or_update:cloud_network": "!ref:Amazon_cloud_network"
+    cloud_service: "!ref:Amazon_S3"
+  - "!create_or_update:cloud_network": "!ref:DigitalOcean_cloud_network"
+    cloud_service: "!ref:DigitalOceanSpace"
+
+providers:
+  - "!create_or_update:name": "AT&T"
+
+circuit_types:
+  - "!create_or_update:name": "Direct Connect"
+
+circuits:
+{% for manufacturer in manufacturer_list %}
+  - "!create_or_update:cid": "{{manufacturer}}-ATL01"
+    status__name: "Active"
+    provider__name: "AT&T"
+    circuit_type__name: "Direct Connect"
+    circuit_terminations:
+      - "!create_or_update:term_side": "A"
+        "!create_or_update:location__name": "ATL01"
+      - "!create_or_update:term_side": "Z"
+        "!create_or_update:cloud_network__name": "{{ manufacturer }}-VPC-01"
+  - "!create_or_update:cid": "{{manufacturer}}-DFW01"
+    status__name: "Active"
+    provider__name: "AT&T"
+    circuit_type__name: "Direct Connect"
+    circuit_terminations:
+      - "!create_or_update:term_side": "A"
+        "!create_or_update:location__name": "DFW01"
+      - "!create_or_update:term_side": "Z"
+        "!create_or_update:cloud_network__name": "{{ manufacturer }}-VPC-01"
+{% endfor %}
