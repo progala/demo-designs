@@ -6,6 +6,7 @@ from .device_controllers import ControllerDesign
 from .device_modules import ModuleDesign
 from .edge_site import EdgeDesign
 from .initial_data import InitialDesign
+from .p2p import P2PDesign
 
 __all__ = [
     "CloudNetworkDesign",
@@ -14,4 +15,5 @@ __all__ = [
     "EdgeDesign",
     "InitialDesign",
     "ModuleDesign",
+    "P2PDesign",
 ]
