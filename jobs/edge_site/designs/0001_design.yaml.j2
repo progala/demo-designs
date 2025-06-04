@@ -1,7 +1,7 @@
 ---
 locations:
   - name: "{{ site_name }}"
-    "id": "{{ deterministic_uuid(site_name, 'locations') }}"
+    "id": "{{ site_name | deterministic_uuid('locations') }}"
     status__name: "Staging"
     location_type__name: "Site"
     parent__name: "{{ region.name }}"

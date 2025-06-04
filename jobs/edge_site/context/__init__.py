@@ -11,6 +11,7 @@ NAMESPACE_UUID = os.getenv("NAMESPACE_UUID", "12345678-1234-5678-1234-5678123456
 class EdgeDesignContext(Context):
     """Render context for basic design."""
 
+    @library.filter
     def deterministic_uuid(self, name: str, model: str) -> str:
         namespace = uuid.UUID(NAMESPACE_UUID)
         name = str(name).lower()
