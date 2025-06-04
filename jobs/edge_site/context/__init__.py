@@ -28,8 +28,8 @@ NAMESPACE_UUID = os.getenv("NAMESPACE_UUID", "12345678-1234-5678-1234-5678123456
 
 from django.template import engines
 
-jinja_env = engines['jinja2'].env
-jinja_env.filters['reverse'] = network_stringz
+jinja_env = engines['jinja'].env
+jinja_env.filters['network_stringz'] = network_stringz
 
 
 @context_file("context.yaml")
