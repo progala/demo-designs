@@ -18,7 +18,7 @@ locations:
         interfaces:
           - name: "GigabitEthernet0/0"
             type: "1000base-t"
-            description: "{{ 'Uplink to backbone ' ~ 'stringz' | network_stringz }}"
+            description: "{{ 'Uplink to backbone ' ~ 'z' | random_stuff }}"
             status__name: "Planned"
     {% endfor %}
 circuits:
