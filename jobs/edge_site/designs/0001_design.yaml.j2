@@ -1,7 +1,7 @@
 ---
 locations:
   - name: "{{ site_name }}"
-    "id": "{{ site_name | deterministic_uuid('locations') }}"
+    "id": "{{ deterministic_uuid(site_name, 'locations') }}"
     status__name: "Staging"
     location_type__name: "Site"
     parent__name: "{{ region.name }}"
@@ -18,7 +18,7 @@ locations:
         interfaces:
           - name: "GigabitEthernet0/0"
             type: "1000base-t"
-            description: "{{ 'Uplink to backbone' ~ 't' | network_string }}"
+            description: "{{ 'Uplink to backbone ' ~ 'stringz' | network_stringz }}"
             status__name: "Planned"
     {% endfor %}
 circuits:

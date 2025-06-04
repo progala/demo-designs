@@ -11,7 +11,6 @@ NAMESPACE_UUID = os.getenv("NAMESPACE_UUID", "12345678-1234-5678-1234-5678123456
 class EdgeDesignContext(Context):
     """Render context for basic design."""
 
-    @library.filter
     def deterministic_uuid(self, name: str, model: str) -> str:
         namespace = uuid.UUID(NAMESPACE_UUID)
         name = str(name).lower()
@@ -21,7 +20,7 @@ class EdgeDesignContext(Context):
         return str(uuid.uuid5(namespace, seed))
     
     @library.filter
-    def network_string(network: str) -> str:
+    def network_stringz(network: str) -> str:
         """Jinja2 filter to convert the IPNetwork object to a string.
 
         If an attribute is supplied, first lookup the attribute on the IPNetwork
