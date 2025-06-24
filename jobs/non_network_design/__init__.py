@@ -1,44 +1,50 @@
-"""Non-networking design demonstrates Design Builder support for general infrastructure data."""
+"""Non-networking demo design demonstrates the capabilities of the Design Builder."""
 
-from nautobot.apps.jobs import register_jobs, StringVar, ObjectVar
-from nautobot.extras.models import Tenant
-
+from nautobot.apps.jobs import register_jobs, StringVar, ObjectVar, IntegerVar
+from nautobot.dcim.models import Location
+from nautobot.tenancy.models import Tenant
 from nautobot_design_builder.design_job import DesignJob
+from .context import NonNetworkDesignContext
 
-from .context import NonNetworkingDesignContext
-
-
-class NonNetworkingDesign(DesignJob):
-    """A basic non-networking design job example for things like tenants, services, and virtualization."""
-
+class NonNetworkDesign(DesignJob):
+    """A basic non-networking infra design for design builder."""
+    region = ObjectVar(
+        label="Region",
+        description="Select the region for this site",
+        model=Location,
+    )
+    site_name = StringVar(
+        label="Site Name",
+        regex=r"\w{3}\d+",
+        description="Unique name for the site."
+    )
+    cluster_name = StringVar(
+        label="Cluster Name",
+        default="Cluster-01"
+    )
     tenant = ObjectVar(
         label="Tenant",
-        description="Tenant associated with this infrastructure bundle",
         model=Tenant,
+        required=False,
+        description="Optional tenant to assign resources to."
     )
-
-    app_name = StringVar(
-        label="Application Name",
-        description="Logical name for the service or app (used for grouping)",
+    rack_name = StringVar(
+        label="Rack Name",
+        default="Rack-01"
     )
-
-    environment = StringVar(
-        label="Environment",
-        description="Environment this design applies to (e.g., dev, staging, prod)",
-        default="dev",
+    vm_quantity = IntegerVar(
+        label="Number of VMs",
+        default=3
     )
-
     has_sensitive_variables = False
 
     class Meta:
-        """Metadata describing this non-network design job."""
-
-        name = "Non-Networking Design"
+        """Metadata describing this non-networking infra design job."""
+        name = "Non-Network Infra Design"
         commit_default = False
-        design_file = "non_networking_design/0001_design.yaml.j2"
-        context_class = NonNetworkingDesignContext
+        design_file = "designs/0002_non_network.yaml.j2"
+        context_class = NonNetworkDesignContext
         nautobot_version = ">=2"
 
-
 name = "Demo Designs"
-register_jobs(NonNetworkingDesign)
+register_jobs(NonNetworkDesign)
