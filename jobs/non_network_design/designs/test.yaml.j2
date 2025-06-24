@@ -1,1 +1,111 @@
+-
+locations:
+  - name: "{{ site_name }}"
+    status__name: "Staging"
+    location_type__name: "Site"
+    parent__name: "{{ region.name }}"
+    physical_address: "123 Data Hall, Server Street"
+    latitude: 37.1234
+    longitude: -122.5678
 
+tenant_groups:
+  - name: "Internal"
+  - name: "External Clients"
+
+tenants:
+  - name: "Finance Team"
+    tenant_group__name: "Internal"
+  - name: "IoT Sensors"
+    tenant_group__name: "Internal"
+
+racks:
+  - name: "Rack-01"
+    site__name: "{{ site_name }}"
+    status__name: "Available"
+    u_height: 42
+    type: "4-post frame"
+
+clusters:
+  - name: "{{ site_name }}-cluster"
+    site__name: "{{ site_name }}"
+    status__name: "Active"
+    cluster_type__name: "Generic"
+
+virtual_machines:
+  {% for i in range(3) %}
+  - name: "{{ site_name }}-app-vm{{ i }}"
+    status__name: "Provisioning"
+    role__name: "Application Server"
+    cluster__name: "{{ site_name }}-cluster"
+    tenant__name: "Finance Team"
+    primary_ip4: "10.0.{{ i }}.10"
+    vcpus: 4
+    memory: 8192
+    disk: 80
+    tags:
+      - "VM"
+      - "AppServer"
+    custom_fields:
+      environment: "staging"
+    interfaces:
+      - name: "eth0"
+        type: "virtual"
+      - name: "eth1"
+        type: "virtual"
+  {% endfor %}
+
+inventory_items:
+  - name: "UPS-APC"
+    rack__name: "Rack-01"
+    manufacturer__name: "APC"
+    part_id: "SMT1000"
+    serial: "A123456789"
+    asset_tag: "UPSA01"
+    custom_fields:
+      warranty_expiry: "2026-12-31"
+  - name: "KVM-Switch"
+    rack__name: "Rack-01"
+    manufacturer__name: "Dell"
+    part_id: "DKVM4"
+    serial: "KVM56789"
+    asset_tag: "KVMA01"
+
+power_panels:
+  - name: "Main-Panel"
+    site__name: "{{ site_name }}"
+    location__name: "{{ site_name }}"
+    rack__name: "Rack-01"
+
+power_feeds:
+  - power_panel__name: "Main-Panel"
+    rack__name: "Rack-01"
+    status__name: "Active"
+    type: "Primary"
+    supply: "AC"
+    voltage: 208
+    amperage: 30
+
+device_roles:
+  - name: "Environmental Sensor"
+    color: "c0ffee"
+  - name: "Security Camera"
+    color: "0099ff"
+
+contacts:
+  - name: "Jane Doe"
+    phone: "+1-800-123-4567"
+    email: "jane.doe@example.com"
+    role: "Facilities Manager"
+
+config_contexts:
+  - name: "Staging Default Settings"
+    is_active: true
+    data:
+      timezone: "UTC"
+      backup: true
+    locations:
+      - "{{ site_name }}"
+
+tags:
+  - name: "VM"
+  - name: "AppServer"
