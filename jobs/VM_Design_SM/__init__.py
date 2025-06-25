@@ -1,13 +1,12 @@
-"""Non-networking demo design demonstrates the capabilities of the Design Builder."""
-
+"""Small/medium demo design demonstrates the capabilities of the Design Builder."""
 from nautobot.apps.jobs import register_jobs, StringVar, ObjectVar, IntegerVar
 from nautobot.dcim.models import Location
 from nautobot.tenancy.models import Tenant
 from nautobot_design_builder.design_job import DesignJob
 from .context import NonNetworkDesignContext
 
-class NonNetworkDesign(DesignJob):
-    """A basic non-networking infra design for design builder."""
+class VMSMDesign(DesignJob):
+    """A basic small/medium infra design for design builder."""
     region = ObjectVar(
         label="Region",
         description="Select the region for this site",
@@ -16,7 +15,7 @@ class NonNetworkDesign(DesignJob):
     site_name = StringVar(
         label="Site Name",
         regex=r"\w{3}\d+",
-        description="Unique name for the site."
+        description="Unique name for the site.",
     )
     cluster_name = StringVar(
         label="Cluster Name",
@@ -40,11 +39,11 @@ class NonNetworkDesign(DesignJob):
 
     class Meta:
         """Metadata describing this non-networking infra design job."""
-        name = "Non-Network Infra Design"
+        name = "VM Small/Medium Infra Design"
         commit_default = False
         design_file = "designs/0001_design.yaml.j2"
         context_class = NonNetworkDesignContext
         nautobot_version = ">=2"
 
 name = "Demo Designs"
-register_jobs(NonNetworkDesign)
+register_jobs(VMSMDesign)
