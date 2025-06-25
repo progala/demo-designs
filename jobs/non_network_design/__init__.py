@@ -42,7 +42,7 @@ class NonNetworkDesign(DesignJob):
         """Metadata describing this non-networking infra design job."""
         name = "Non-Network Infra Design"
         commit_default = False
-        design_file = "designs/0002_non_network.yaml.j2"
+        design_file = "designs/0001_design.yaml.j2"
         context_class = NonNetworkDesignContext
         nautobot_version = ">=2"
 
