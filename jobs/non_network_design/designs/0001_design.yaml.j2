@@ -31,13 +31,12 @@ clusters:
     cluster_type__name: "Generic"
 
 virtual_machines:
-  {% for i in range(3) %}
-  - name: "{{ site_name }}-app-vm{{ i }}"
+  - name: "{{ site_name }}-app-vm0"
     status__name: "Provisioning"
     role__name: "Application Server"
     cluster__name: "{{ site_name }}-cluster"
     tenant__name: "Finance Team"
-    primary_ip4: "10.0.{{ i }}.10"
+    primary_ip4: "10.0.0.10/32"
     vcpus: 4
     memory: 8192
     disk: 80
@@ -51,7 +50,46 @@ virtual_machines:
         type: "virtual"
       - name: "eth1"
         type: "virtual"
-  {% endfor %}
+
+  - name: "{{ site_name }}-app-vm1"
+    status__name: "Provisioning"
+    role__name: "Application Server"
+    cluster__name: "{{ site_name }}-cluster"
+    tenant__name: "Finance Team"
+    primary_ip4: "10.0.1.10/32"
+    vcpus: 4
+    memory: 8192
+    disk: 80
+    tags:
+      - "VM"
+      - "AppServer"
+    custom_fields:
+      environment: "staging"
+    interfaces:
+      - name: "eth0"
+        type: "virtual"
+      - name: "eth1"
+        type: "virtual"
+
+  - name: "{{ site_name }}-app-vm2"
+    status__name: "Provisioning"
+    role__name: "Application Server"
+    cluster__name: "{{ site_name }}-cluster"
+    tenant__name: "Finance Team"
+    primary_ip4: "10.0.2.10/32"
+    vcpus: 4
+    memory: 8192
+    disk: 80
+    tags:
+      - "VM"
+      - "AppServer"
+    custom_fields:
+      environment: "staging"
+    interfaces:
+      - name: "eth0"
+        type: "virtual"
+      - name: "eth1"
+        type: "virtual"
 
 inventory_items:
   - name: "UPS-APC"
