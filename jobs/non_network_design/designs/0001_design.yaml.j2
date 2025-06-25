@@ -40,9 +40,6 @@ virtual_machines:
     disk: 80
     interfaces:
       - name: "eth0"
-        type: "virtual"
-      - name: "eth1"
-        type: "virtual"
 
   - name: "{{ site_name }}-app-vm1"
     status__name: "Active"
@@ -53,9 +50,6 @@ virtual_machines:
     disk: 80
     interfaces:
       - name: "eth0"
-        type: "virtual"
-      - name: "eth1"
-        type: "virtual"
 
   - name: "{{ site_name }}-app-vm2"
     status__name: "Active"
@@ -65,7 +59,4 @@ virtual_machines:
     memory: 8192
     disk: 80
     interfaces:
-      - name: "eth0"
-        type: "virtual"
-      - name: "eth1"
-        type: "virtual"
+      - name: "eth0"  
