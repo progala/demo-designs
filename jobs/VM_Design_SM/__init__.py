@@ -39,6 +39,7 @@ class VMSMDesign(DesignJob):
 
     class Meta:
         """Metadata describing this non-networking infra design job."""
+        design_mode = DesignModeChoices.DEPLOYMENT
         name = "VM Small/Medium Infra Design"
         commit_default = False
         design_file = "designs/0001_design.yaml.j2"
