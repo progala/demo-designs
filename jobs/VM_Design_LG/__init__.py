@@ -43,7 +43,7 @@ class VMLargeDesign(DesignJob):
         design_mode = DesignModeChoices.DEPLOYMENT
         name = "VM Large Infra Design"
         commit_default = False
-        design_file = "designs/large_design.yaml"
+        design_file = "designs/0001_design.yaml.j2"
         context_class = NonNetworkDesignContext
         nautobot_version = ">=2"
 
