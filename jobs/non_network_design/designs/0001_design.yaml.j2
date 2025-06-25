@@ -32,6 +32,7 @@ clusters:
 
 virtual_machines:
   - name: "{{ site_name }}-app-vm0"
+    status__name: "Active"
     cluster__name: "{{ site_name }}-cluster"
     tenant__name: "Finance Team"
     vcpus: 4
@@ -44,6 +45,7 @@ virtual_machines:
         type: "virtual"
 
   - name: "{{ site_name }}-app-vm1"
+    status__name: "Active"
     cluster__name: "{{ site_name }}-cluster"
     tenant__name: "Finance Team"
     vcpus: 4
@@ -56,6 +58,7 @@ virtual_machines:
         type: "virtual"
 
   - name: "{{ site_name }}-app-vm2"
+    status__name: "Active"
     cluster__name: "{{ site_name }}-cluster"
     tenant__name: "Finance Team"
     vcpus: 4
