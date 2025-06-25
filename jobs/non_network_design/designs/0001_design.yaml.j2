@@ -32,8 +32,6 @@ clusters:
 
 virtual_machines:
   - name: "{{ site_name }}-app-vm0"
-    status__name: "Provisioning"
-    role__name: "Application Server"
     cluster__name: "{{ site_name }}-cluster"
     tenant__name: "Finance Team"
     vcpus: 4
@@ -46,8 +44,6 @@ virtual_machines:
         type: "virtual"
 
   - name: "{{ site_name }}-app-vm1"
-    status__name: "Provisioning"
-    role__name: "Application Server"
     cluster__name: "{{ site_name }}-cluster"
     tenant__name: "Finance Team"
     vcpus: 4
@@ -60,8 +56,6 @@ virtual_machines:
         type: "virtual"
 
   - name: "{{ site_name }}-app-vm2"
-    status__name: "Provisioning"
-    role__name: "Application Server"
     cluster__name: "{{ site_name }}-cluster"
     tenant__name: "Finance Team"
     vcpus: 4
