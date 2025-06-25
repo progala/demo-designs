@@ -30,21 +30,6 @@ clusters:
     location__name: "{{ site_name }}"
     cluster_type__name: "Generic"
 
-inventory_items:
-  - name: "UPS-APC"
-    manufacturer__name: "APC"
-    part_id: "SMT1000"
-    serial: "A123456789"
-    asset_tag: "UPSA01"
-    custom_fields:
-      warranty_expiry: "2026-12-31"
-  - name: "KVM-Switch"
-    rack__name: "Rack-01"
-    manufacturer__name: "Dell"
-    part_id: "DKVM4"
-    serial: "KVM56789"
-    asset_tag: "KVMA01"
-
 power_panels:
   - name: "Main-Panel"
     location__name: "{{ site_name }}"
