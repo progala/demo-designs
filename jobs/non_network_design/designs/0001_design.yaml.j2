@@ -30,14 +30,6 @@ clusters:
     location__name: "{{ site_name }}"
     cluster_type__name: "Generic"
 
-custom_fields:
-  - name: "environment"
-    label: "Environment"
-    type: "text"
-tags:
-  - name: "VM"
-  - name: "AppServer"
-
 virtual_machines:
   {% for i in range(3) %}
   - name: "{{ site_name }}-app-vm{{ i }}"
