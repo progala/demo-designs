@@ -38,14 +38,6 @@ tags:
   - name: "VM"
   - name: "AppServer"
 
-ip_addresses:
-{% for i in range(3) %}
-  - address: "10.0.{{ i }}.10/32"
-    status__name: "Active"
-    assigned_object_type: "virtualization.vm"
-    assigned_object__name: "{{ site_name }}-app-vm{{ i }}"
-{% endfor %}
-
 virtual_machines:
   {% for i in range(3) %}
   - name: "{{ site_name }}-app-vm{{ i }}"
