@@ -28,7 +28,7 @@ racks:
 clusters:
   - name: "{{ site_name }}-cluster"
     location__name: "{{ site_name }}"
-    cluster_type__name: "Generic"
+    cluster_type__name: "aws-ec2"
 
 virtual_machines:
   {% for i in range(3) %}
