@@ -27,7 +27,7 @@ racks:
 
 clusters:
   - name: "{{ site_name }}-cluster"
-    site__name: "{{ site_name }}"
+    location__name: "{{ site_name }}"
     status__name: "Active"
     cluster_type__name: "Generic"
 
@@ -72,7 +72,6 @@ inventory_items:
 
 power_panels:
   - name: "Main-Panel"
-    site__name: "{{ site_name }}"
     location__name: "{{ site_name }}"
     rack__name: "Rack-01"
 
