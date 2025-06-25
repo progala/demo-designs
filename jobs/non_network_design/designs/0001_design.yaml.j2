@@ -50,6 +50,7 @@ virtual_machines:
     disk: 80
     interfaces:
       - name: "eth0"
+        status__name: "Active"
 
   - name: "{{ site_name }}-app-vm2"
     status__name: "Active"
@@ -59,4 +60,5 @@ virtual_machines:
     memory: 8192
     disk: 80
     interfaces:
-      - name: "eth0"  
+      - name: "eth0"
+        status__name: "Active"
