@@ -39,6 +39,7 @@ class VMLargeDesign(DesignJob):
 
     class Meta:
         """Metadata describing this large infra design job."""
+        design_mode = DesignModeChoices.DEPLOYMENT
         name = "VM Large Infra Design"
         commit_default = False
         design_file = "designs/large_design.yaml"
