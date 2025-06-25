@@ -30,6 +30,23 @@ clusters:
     location__name: "{{ site_name }}"
     cluster_type__name: "Generic"
 
+custom_fields:
+  - name: "environment"
+    type: "text"
+tags:
+  - name: "VM"
+  - name: "AppServer"
+vm_roles:
+  - name: "Application Server"
+    color: "00ff00"
+ip_addresses:
+{% for i in range(3) %}
+  - address: "10.0.{{ i }}.10/32"
+    status__name: "Active"
+    assigned_object_type: "virtualization.vm"
+    assigned_object__name: "{{ site_name }}-app-vm{{ i }}"
+{% endfor %}
+
 virtual_machines:
   {% for i in range(3) %}
   - name: "{{ site_name }}-app-vm{{ i }}"
