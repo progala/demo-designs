@@ -4,6 +4,7 @@ from nautobot.dcim.models import Location
 from nautobot.tenancy.models import Tenant
 from nautobot_design_builder.design_job import DesignJob
 from .context import NonNetworkDesignContext
+from nautobot_design_builder.choices import DesignModeChoices
 
 class VMXXLDesign(DesignJob):
     """An XXL-scale infra design for design builder."""
