@@ -30,20 +30,6 @@ clusters:
     location__name: "{{ site_name }}"
     cluster_type__name: "Generic"
 
-power_panels:
-  - name: "Main-Panel"
-    location__name: "{{ site_name }}"
-    rack__name: "Rack-01"
-
-power_feeds:
-  - power_panel__name: "Main-Panel"
-    rack__name: "Rack-01"
-    status__name: "Active"
-    type: "Primary"
-    supply: "AC"
-    voltage: 208
-    amperage: 30
-
 device_roles:
   - name: "Environmental Sensor"
     color: "c0ffee"
