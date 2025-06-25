@@ -8,16 +8,6 @@ locations:
     latitude: 37.1234
     longitude: -122.5678
 
-tenant_groups:
-  - name: "Internal"
-  - name: "External Clients"
-
-tenants:
-  - name: "Finance Team"
-    tenant_group__name: "Internal"
-  - name: "IoT Sensors"
-    tenant_group__name: "Internal"
-
 racks:
   - name: "Rack-01"
     location__name: "{{ site_name }}"
