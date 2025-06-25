@@ -1,12 +1,11 @@
----
 locations:
   - name: "{{ site_name }}"
     status__name: "Staging"
     location_type__name: "Site"
     parent__name: "{{ region.name }}"
-    physical_address: "123 Data Hall, Server Street"
-    latitude: 37.1234
-    longitude: -122.5678
+    physical_address: "456 Compute Row, Server Street"
+    latitude: 38.0001
+    longitude: -123.0001
 
 racks:
   - name: "Rack-01"
@@ -31,7 +30,6 @@ virtual_machines:
     interfaces:
       - name: "eth0"
         status__name: "Active"
-
   - name: "{{ site_name }}-app-vm1"
     status__name: "Active"
     cluster__name: "{{ site_name }}-cluster"
@@ -42,8 +40,77 @@ virtual_machines:
     interfaces:
       - name: "eth0"
         status__name: "Active"
-
   - name: "{{ site_name }}-app-vm2"
+    status__name: "Active"
+    cluster__name: "{{ site_name }}-cluster"
+    tenant__name: "Finance Team"
+    vcpus: 4
+    memory: 8192
+    disk: 80
+    interfaces:
+      - name: "eth0"
+        status__name: "Active"
+  - name: "{{ site_name }}-app-vm3"
+    status__name: "Active"
+    cluster__name: "{{ site_name }}-cluster"
+    tenant__name: "Finance Team"
+    vcpus: 4
+    memory: 8192
+    disk: 80
+    interfaces:
+      - name: "eth0"
+        status__name: "Active"
+  - name: "{{ site_name }}-app-vm4"
+    status__name: "Active"
+    cluster__name: "{{ site_name }}-cluster"
+    tenant__name: "Finance Team"
+    vcpus: 4
+    memory: 8192
+    disk: 80
+    interfaces:
+      - name: "eth0"
+        status__name: "Active"
+  - name: "{{ site_name }}-app-vm5"
+    status__name: "Active"
+    cluster__name: "{{ site_name }}-cluster"
+    tenant__name: "Finance Team"
+    vcpus: 4
+    memory: 8192
+    disk: 80
+    interfaces:
+      - name: "eth0"
+        status__name: "Active"
+  - name: "{{ site_name }}-app-vm6"
+    status__name: "Active"
+    cluster__name: "{{ site_name }}-cluster"
+    tenant__name: "Finance Team"
+    vcpus: 4
+    memory: 8192
+    disk: 80
+    interfaces:
+      - name: "eth0"
+        status__name: "Active"
+  - name: "{{ site_name }}-app-vm7"
+    status__name: "Active"
+    cluster__name: "{{ site_name }}-cluster"
+    tenant__name: "Finance Team"
+    vcpus: 4
+    memory: 8192
+    disk: 80
+    interfaces:
+      - name: "eth0"
+        status__name: "Active"
+  - name: "{{ site_name }}-app-vm8"
+    status__name: "Active"
+    cluster__name: "{{ site_name }}-cluster"
+    tenant__name: "Finance Team"
+    vcpus: 4
+    memory: 8192
+    disk: 80
+    interfaces:
+      - name: "eth0"
+        status__name: "Active"
+  - name: "{{ site_name }}-app-vm9"
     status__name: "Active"
     cluster__name: "{{ site_name }}-cluster"
     tenant__name: "Finance Team"
