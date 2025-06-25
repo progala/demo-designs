@@ -43,7 +43,7 @@ class VMXXLDesign(DesignJob):
         design_mode = DesignModeChoices.DEPLOYMENT
         name = "VM XXL Infra Design"
         commit_default = False
-        design_file = "designs/xxl_design.yaml"
+        design_file = "designs/0001_design.yaml.j2"
         context_class = NonNetworkDesignContext
         nautobot_version = ">=2"
 
