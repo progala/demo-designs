@@ -30,21 +30,6 @@ clusters:
     location__name: "{{ site_name }}"
     cluster_type__name: "Generic"
 
-contacts:
-  - name: "Jane Doe"
-    phone: "+1-800-123-4567"
-    email: "jane.doe@example.com"
-    role: "Facilities Manager"
-
-config_contexts:
-  - name: "Staging Default Settings"
-    is_active: true
-    data:
-      timezone: "UTC"
-      backup: true
-    locations:
-      - "{{ site_name }}"
-
 tags:
   - name: "VM"
   - name: "AppServer"
