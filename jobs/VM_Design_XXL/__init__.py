@@ -1,5 +1,5 @@
 """XXL demo design demonstrates the capabilities of the Design Builder."""
-from nautobot.apps.jobs import register_jobs, StringVar, ObjectVar, IntegerVar, CHoiceVar
+from nautobot.apps.jobs import register_jobs, StringVar, ObjectVar, IntegerVar, ChoiceVar
 from nautobot.dcim.models import Location
 from nautobot.tenancy.models import Tenant
 from nautobot_design_builder.design_job import DesignJob
