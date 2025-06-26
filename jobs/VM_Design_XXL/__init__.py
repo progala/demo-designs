@@ -1,5 +1,5 @@
 """XXL demo design demonstrates the capabilities of the Design Builder."""
-from nautobot.apps.jobs import register_jobs, StringVar, ObjectVar, IntegerVar
+from nautobot.apps.jobs import register_jobs, StringVar, ObjectVar, IntegerVar, CHoiceVar
 from nautobot.dcim.models import Location
 from nautobot.tenancy.models import Tenant
 from nautobot_design_builder.design_job import DesignJob
@@ -35,6 +35,18 @@ class VMXXLDesign(DesignJob):
     vm_quantity = IntegerVar(
         label="Number of VMs",
         default=30
+    )
+    memory_per_vm = ChoiceVar(
+    label="Memory per VM (GB)",
+    choices=[
+        ("2", "2 GB"),
+        ("4", "4 GB"),
+        ("8", "8 GB"),
+        ("16", "16 GB"),
+        ("32", "32 GB"),
+    ],
+    default="8",
+    description="Amount of memory (in GB) to assign to each VM."
     )
     has_sensitive_variables = False
 
