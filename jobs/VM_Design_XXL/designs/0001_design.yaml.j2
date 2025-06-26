@@ -25,7 +25,7 @@ virtual_machines:
     cluster__name: "{{ site_name }}-cluster"
     tenant__name: "Finance Team"
     vcpus: 4
-    memory: 8192
+    memory: {{ memory_per_vm|int * 1024 }}
     disk: 80
     interfaces:
       - name: "eth0"
