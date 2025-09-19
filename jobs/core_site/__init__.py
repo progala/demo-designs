@@ -4,6 +4,7 @@ from nautobot.apps.jobs import register_jobs, ObjectVar, StringVar, IPNetworkVar
 from nautobot.dcim.models import Location
 
 from nautobot_design_builder.design_job import DesignJob
+from nautobot_design_builder.choices import DesignModeChoices
 
 from .context import CoreSiteContext
 
@@ -28,6 +29,7 @@ class CoreSiteDesign(DesignJob):
         name = "Backbone Site Design"
         commit_default = False
         design_file = "designs/0001_design.yaml.j2"
+        design_mode = DesignModeChoices.DEPLOYMENT
         context_class = CoreSiteContext
         nautobot_version = ">=2"
 
