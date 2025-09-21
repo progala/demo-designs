@@ -99,5 +99,5 @@ The outcome of the design contains:
     - A cable connected to both `Interfaces`
 """
 
-name = "Demo Designs"
+name = "BalticNOG"
 register_jobs(P2PDesign)
